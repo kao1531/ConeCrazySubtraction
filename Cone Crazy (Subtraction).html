@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cone Crazy (Subtraction) - Made by Allison Kao</title>
+<style>
+	body{
+		text-align: center;
+		font family: "Century Gothic", serif;
+		background-image: url('ConeCrazy.png');	
+		font-size: 30px;
+		color: #8EF2FF;
+		}
+		
+</style>	
+	<script>
+	//global variables	
+	var firstNum = 0;
+	
+	var secondNum = 0;
+		
+	var equationAnswer = 0;
+	
+	var strawberryChoice1 = 0;
+	
+	var chocolateChoice2 = 0;
+	
+	var vanillaChoice3 = 0;
+	
+	var mintChoice4 = 0;
+	
+	var rightChoice = 0;
+	
+	var score = 0;
+	
+	var numbers;
+	
+	var rounds = 0;
+
+	
+	function randomInt(min, max) 
+		{
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min)) + min;
+			
+			// Code citation:
+			// 		Author: Mozilla Foundation
+			//		Accessed: 5/31/2020
+			//		URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random 
+			// 		Purpose: Generate a random integer, n, such that min <= n <= max
+		}
+	
+	function resetBackground()
+	{
+		document.body.style.backgroundImage = "url('ConeCrazy.png')";
+	}
+	
+	function generateNumbers()
+	{
+		firstNum = randomInt(0,12);
+		secondNum = randomInt(0,12);
+		while(secondNum > firstNum)
+		{
+			secondNum = randomInt(0,12);
+		}
+		var output = firstNum + " - " + secondNum;
+		document.getElementById('idFirstNum').innerHTML=output;
+		//document.getElementById('idSecondNum').innerHTML=secondNum;
+		getAnswer();
+		if (rounds == 20)
+			{
+				finishGame();
+			}
+		rounds += 1;
+	}
+	
+	function getAnswer()
+	{
+		equationAnswer = firstNum - secondNum;
+		generateChoices();
+	}
+	
+	
+	function generateChoices()
+	{	
+		var unique = false;
+		var unique1 = false;
+
+		while (unique1 == false)
+		{
+			rightChoice = randomInt(0,4);
+			while (rightChoice == 4)
+			{
+				rightChoice = randomInt(0,4);
+			}
+			strawberryChoice1 = randomInt(0,12);
+			chocolateChoice2 = randomInt(0,12);
+			vanillaChoice3 = randomInt(0,12);
+			mintChoice4 = randomInt (0,12);	
+			
+			numbers = [strawberryChoice1, chocolateChoice2, vanillaChoice3, mintChoice4];
+			unique = checkIfArrayIsUnique(numbers);
+			if (strawberryChoice1 != equationAnswer && chocolateChoice2 != equationAnswer && vanillaChoice3 != equationAnswer && mintChoice4 != equationAnswer && unique)
+			{
+				unique1 = true;
+			}
+			
+		}
+			if (rightChoice == 0)
+			{
+				strawberryChoice1 = equationAnswer;
+			}
+			else if (rightChoice == 1)
+			{
+				chocolateChoice2 = equationAnswer;
+			}
+			else if (rightChoice == 2)
+			{
+				vanillaChoice3 = equationAnswer;
+			}
+			else if (rightChoice == 3)
+			{
+				mintChoice4 = equationAnswer;
+			}
+		document.getElementById('num1').innerHTML = strawberryChoice1;	
+		document.getElementById('num2').innerHTML = chocolateChoice2;
+		document.getElementById('num3').innerHTML = vanillaChoice3;
+		document.getElementById('num4').innerHTML = mintChoice4;
+	}
+	
+	function checkIfArrayIsUnique(arr) 
+	{
+		var map = {}, i, size;
+
+		for (i = 0, size = arr.length; i < size; i++){
+			if (map[arr[i]]){
+				return false;
+			}
+
+			map[arr[i]] = true;
+		}
+
+		return true;
+	}
+	
+	function checkAnswer1()
+    {	
+		if (strawberryChoice1 == equationAnswer)
+			{
+				score += 1;
+				alert("Hooray!!");
+				document.getElementById('idScore').innerHTML = "Score: "+score+"";
+				document.body.style.backgroundImage = "url('strawberryeyyeey.png')";
+				setTimeout(resetBackground, 2000);
+			}
+		else
+		{
+			alert("That's not right. Try again.");
+		}
+		generateNumbers();
+	}
+	
+	function checkAnswer2()
+    {	
+		if (chocolateChoice2 == equationAnswer)
+			{
+				score += 1;
+				alert("Hooray!!");
+				document.getElementById('idScore').innerHTML = "Score: "+score+"";
+				document.body.style.backgroundImage = "url('chonky.png')";
+				setTimeout(resetBackground, 2000);
+			}
+		else
+		{
+			alert("That's not right. Try again.");
+		}
+		generateNumbers();
+	}
+	
+	function checkAnswer3()
+    {	
+		if (vanillaChoice3 == equationAnswer)
+			{
+				score += 1;
+				alert("Hooray!!");
+				document.getElementById('idScore').innerHTML = "Score: "+score+"";				
+				document.body.style.backgroundImage = "url('voonoola.png')";
+				setTimeout(resetBackground, 2000);
+			}
+		else
+		{
+			alert("That's not right. Try again.");
+		}
+		generateNumbers();
+	}
+	
+	function checkAnswer4()
+    {	
+		if (mintChoice4 == equationAnswer)
+			{
+				score += 1;
+				alert("Hooray!!");
+				document.getElementById('idScore').innerHTML = "Score: "+score+"";
+				document.body.style.backgroundImage = "url('minty.png')";
+				setTimeout(resetBackground, 2000);
+			}
+		else
+		{
+			alert("That's not right. Try again.");
+		}
+		generateNumbers();
+	}
+	
+	function finishGame()
+	{
+		document.body.style.backgroundImage = "url('confefe.gif')";
+		document.body.style.color = "black"; 
+		document.getElementById('idFirstNum').innerHTML = "";
+		document.getElementById('num1').innerHTML = "Your game is complete! You got a score of "+score+"/20. Congratulations!";
+		document.getElementById('num2').innerHTML = "";
+		document.getElementById('num3').innerHTML = "";
+		document.getElementById('num4').innerHTML = "";
+		document.getElementById('idScore').innerHTML = "";
+		document.getElementById('idButtonStrawberry').innerHTML = "";
+		document.getElementById('idButtonChocolate').innerHTML = "";
+		document.getElementById('idButtonVanilla').innerHTML = "";
+		document.getElementById('idButtonMint').innerHTML = "";
+	}
+	
+	
+	</script>
+</head>
+<body onLoad="generateNumbers()">
+	<br>
+	<h3>Cone Crazy (Subtraction)</h3>
+	<h4><div id="idFirstNum"></div></h4>
+	<div id="idSecondNum"></div>
+	<br>
+	<div id="num1"></div>
+	<div id="idButtonStrawberry"><input type="button" value="" onClick="checkAnswer1()"></div>
+	<br>
+	<div id ="num2"></div>
+	<div id="idButtonChocolate"><input type="button" value="" onClick="checkAnswer2()"></div>
+	<br>
+	<div id ="num3"></div>
+	<div id="idButtonVanilla"><input type="button" value="" onClick="checkAnswer3()"></div>
+	<br>
+	<div id = "num4"></div>
+	<div id="idButtonMint"><input type="button" value="" onClick="checkAnswer4()"></div>
+	<br>
+	<br>
+	<div id="idScore"></div>
+</body>
+</html>
+	
